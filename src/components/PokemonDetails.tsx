@@ -130,7 +130,7 @@ const PokemonDetails = () => {
     return color;
   };
 
-  console.log(evolution);
+  console.log(pokemonDetail);
 
   let imageUrl = '';
 
@@ -141,7 +141,7 @@ const PokemonDetails = () => {
   }
 
   return (
-    <div className="h-full w-full rounded-xl bg-white">
+    <div className="h-full w-full rounded-xl bg-white px-4">
       <div className="relative h-[130px] w-full">
         <div className="absolute -top-[90px] flex w-full justify-center">
           {Object.keys(pokemonDetail).length === 0 && (
@@ -286,14 +286,53 @@ const PokemonDetails = () => {
             </div>
 
             <div className="mt-7">
-              <p className="w-full text-center font-semibold">Evolution</p>
-              <div className="flex gap-10 justify-center">
+              <p className="mb-3 w-full text-center font-semibold">Evolution</p>
+              <div className="flex items-center justify-center gap-2">
                 {evolution !== undefined && (
                   <>
-                    <p>{evolution.chain.species.name}</p>
-                    <p>{evolution.chain.evolves_to[0].species.name}</p>
-                    {evolution.chain.evolves_to[0].evolves_to[0] !== undefined && (
-                      <p>{evolution.chain.evolves_to[0].evolves_to[0].species.name}</p>
+                    <div>
+                      <img
+                        src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/${evolution.chain.species.url
+                          .slice(42)
+                          .replace('/', '')}.png`}
+                        alt={evolution.chain.species.name}
+                      />
+                      <p className="text-center capitalize">{evolution.chain.species.name}</p>
+                    </div>
+                    {evolution.chain.evolves_to[0] !== undefined && (
+                      <>
+                        <p className="rounded-xl bg-gray-100 px-2 py-1 text-[14px] font-bold text-gray-500">
+                          Lvl. {evolution.chain.evolves_to[0].evolution_details[0].min_level ?? '?'}
+                        </p>
+                        {/* <p>{evolution.chain.evolves_to[0].species.name}</p> */}
+                        <div>
+                          <img
+                            src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/${evolution.chain.evolves_to[0].species.url
+                              .slice(42)
+                              .replace('/', '')}.png`}
+                            alt={evolution.chain.evolves_to[0].species.name}
+                          />
+                          <p className="text-center capitalize">{evolution.chain.evolves_to[0].species.name}</p>
+                        </div>
+                        {evolution.chain.evolves_to[0].evolves_to[0] !== undefined && (
+                          <>
+                            <p className="rounded-xl bg-gray-100 px-2 py-1 text-[14px] font-bold text-gray-500">
+                              Lvl. {evolution.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level ?? '?'}
+                            </p>
+                            <div>
+                              <img
+                                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${evolution.chain.evolves_to[0].evolves_to[0].species.url
+                                  .slice(42)
+                                  .replace('/', '')}.png`}
+                                alt={evolution.chain.evolves_to[0].evolves_to[0].species.name}
+                              />
+                              <p className="text-center capitalize">
+                                {evolution.chain.evolves_to[0].evolves_to[0].species.name}
+                              </p>
+                            </div>
+                          </>
+                        )}
+                      </>
                     )}
                   </>
                 )}

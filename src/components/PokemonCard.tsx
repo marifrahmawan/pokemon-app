@@ -120,7 +120,7 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
 
   return (
     <div
-      className="my-10 h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer"
+      className="lg:my-10 my-4 h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer"
       onClick={() => detailHandler()}
     >
       <div className="relative flex h-[50px] justify-center">
