@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import usePokemonStore from '../store/pokemon-store';
 import pokeBallPict from '../assets/pokeball.png';
 import { useEffect, useState } from 'react';
 
 const PokemonDetails = () => {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [species, setSpecies] = useState<any>();
 
   const pokemonDetail = usePokemonStore((state) => state.pokemonDetail);
@@ -187,7 +187,6 @@ const PokemonDetails = () => {
             <div className="mt-5 px-5">
               <p className="w-full text-center font-semibold">Abilities</p>
               <div className="mt-3 flex flex-wrap justify-center gap-3">
-                {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                 {pokemonDetail.abilities.map((item: any) => (
                   <div className="rounded-xl bg-gray-100 px-4" key={item.ability.name}>
                     <p className="flex h-[34px] items-center justify-center capitalize">
@@ -242,7 +241,6 @@ const PokemonDetails = () => {
                     TOT
                   </p>
                   <p className="mt-2 text-[12px] font-bold">
-                    {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                     {pokemonDetail.stats.reduce((acc: any, obj: any) => {
                       return acc + obj.base_stat;
                     }, 0)}
