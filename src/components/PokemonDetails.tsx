@@ -5,24 +5,30 @@ import { useEffect, useState } from 'react';
 
 const PokemonDetails = () => {
   const [species, setSpecies] = useState<any>();
+  const [evolution, setEvolution] = useState<any>();
 
   const pokemonDetail = usePokemonStore((state) => state.pokemonDetail);
   const isLoading = usePokemonStore((state) => state.isLoading);
+  // const pokemon = usePokemonStore((state) => state.pokemon);
 
   useEffect(() => {
-    const fetchSpecies = async () => {
+    const fetchData = async () => {
       try {
         if (Object.keys(pokemonDetail).length > 0) {
-          const res = await fetch(pokemonDetail.species.url);
-          const resData = await res.json();
-          setSpecies(resData);
+          const fetchSpesies = await fetch(pokemonDetail.species.url);
+          const speciesData = await fetchSpesies.json();
+          const fetchEvolution = await fetch(speciesData.evolution_chain.url);
+          const evolutionData = await fetchEvolution.json();
+
+          setSpecies(speciesData);
+          setEvolution(evolutionData);
         }
       } catch (error) {
         console.log(error);
       }
     };
 
-    fetchSpecies();
+    fetchData();
   }, [pokemonDetail]);
 
   const buttonColor = (type: string) => {
@@ -123,6 +129,8 @@ const PokemonDetails = () => {
 
     return color;
   };
+
+  console.log(evolution);
 
   let imageUrl = '';
 
@@ -274,6 +282,21 @@ const PokemonDetails = () => {
                     }, 0)}
                   </p>
                 </div>
+              </div>
+            </div>
+
+            <div className="mt-7">
+              <p className="w-full text-center font-semibold">Evolution</p>
+              <div className="flex gap-10 justify-center">
+                {evolution !== undefined && (
+                  <>
+                    <p>{evolution.chain.species.name}</p>
+                    <p>{evolution.chain.evolves_to[0].species.name}</p>
+                    {evolution.chain.evolves_to[0].evolves_to[0] !== undefined && (
+                      <p>{evolution.chain.evolves_to[0].evolves_to[0].species.name}</p>
+                    )}
+                  </>
+                )}
               </div>
             </div>
           </>
