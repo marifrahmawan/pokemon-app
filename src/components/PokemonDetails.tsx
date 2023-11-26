@@ -25,13 +25,41 @@ const PokemonDetails = () => {
     fetchSpecies();
   }, [pokemonDetail]);
 
-  // console.log(species);
-
   const buttonColor = (type: string) => {
     const color = {
       bgColor: 'bg-gray-100',
       textColor: 'text-base',
     };
+
+    if (type == 'normal') {
+      color.bgColor = 'bg-gray-200';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'steel') {
+      color.bgColor = 'bg-gray-400';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'ice' || type == 'ghost') {
+      color.bgColor = 'bg-gray-100';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'rock') {
+      color.bgColor = 'bg-[#767c6c]';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'dragon') {
+      color.bgColor = 'bg-red-500';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'dark') {
+      color.bgColor = 'bg-black';
+      color.textColor = 'text-white';
+    }
 
     if (type == 'grass') {
       color.bgColor = 'bg-green-500';

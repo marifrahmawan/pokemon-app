@@ -7,6 +7,36 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
       textColor: 'text-base',
     };
 
+    if (type == 'normal') {
+      color.bgColor = 'bg-gray-200';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'steel') {
+      color.bgColor = 'bg-gray-400';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'ice' || type == 'ghost' ) {
+      color.bgColor = 'bg-gray-100';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'rock' ) {
+      color.bgColor = 'bg-[#767c6c]';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'dragon' ) {
+      color.bgColor = 'bg-red-500';
+      color.textColor = 'text-black';
+    }
+
+    if (type == 'dark' ) {
+      color.bgColor = 'bg-black';
+      color.textColor = 'text-white';
+    }
+
     if (type == 'grass') {
       color.bgColor = 'bg-green-500';
       color.textColor = 'text-green-950';
@@ -81,7 +111,7 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
 
   const detailHandler = () => {
     setIsloading();
-    loadPokemonDetail({})
+    loadPokemonDetail({});
     setTimeout(() => {
       loadPokemonDetail(data);
       setIsloading();
