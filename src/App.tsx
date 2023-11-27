@@ -1,16 +1,36 @@
+import PokemonLogo from './assets/International_Pokémon_logo.svg.png';
+
 import PokemonCardContainer from './components/PokemonCardContainer';
 import PokemonDetails from './components/PokemonDetails';
+import usePokemonStore from './store/pokemon-store';
 
 function App() {
-  return (
-    <div className="flex min-h-screen min-w-fit bg-slate-200">
-      <div className="container relative flex h-full w-full">
-        <div className="flex w-full lg:w-[70%] justify-center items-center">
-          <PokemonCardContainer />
-        </div>
+  const showDetails = usePokemonStore((state) => state.showDetails);
 
-        <div className="fixed bottom-[30px] right-0 h-screen w-[550px] pt-28 hidden lg:block">
-          <PokemonDetails />
+  return (
+    <div className='flex bg-gray-100'>
+      <div className="container">
+        <div className="flex my-7 w-full justify-center">
+          <img src={PokemonLogo} alt="Pokemon Logo" className="h-[150px]" />
+        </div>
+        <PokemonCardContainer />
+      </div>
+
+      <div className="absolute left-0 top-0">
+        <div
+          className={`${showDetails ? 'block' : 'hidden'} fixed h-full w-full bg-black/90 hover:cursor-pointer`}
+        ></div>
+      </div>
+
+      <div className="absolute left-0 top-0">
+        <div
+          className={`${
+            showDetails ? '' : 'translate-y-full'
+          } fixed right-0 top-0 z-10 flex  h-full w-full justify-center transition-all duration-700 ease-in-out`}
+        >
+          <div className="flex h-full w-[800px] justify-center pt-14">
+            <PokemonDetails />
+          </div>
         </div>
       </div>
     </div>

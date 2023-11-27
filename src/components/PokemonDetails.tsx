@@ -2,6 +2,7 @@
 import usePokemonStore from '../store/pokemon-store';
 import pokeBallPict from '../assets/pokeball.png';
 import { useEffect, useState } from 'react';
+import CloseSVG from '../assets/CloseSVG';
 
 const PokemonDetails = () => {
   const [species, setSpecies] = useState<any>();
@@ -9,7 +10,7 @@ const PokemonDetails = () => {
 
   const pokemonDetail = usePokemonStore((state) => state.pokemonDetail);
   const isLoading = usePokemonStore((state) => state.isLoading);
-  // const pokemon = usePokemonStore((state) => state.pokemon);
+  const setShowDetails = usePokemonStore((state) => state.setShowDetails);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,6 +31,22 @@ const PokemonDetails = () => {
 
     fetchData();
   }, [pokemonDetail]);
+
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+
+        setShowDetails(false);
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [setShowDetails]);
 
   const buttonColor = (type: string) => {
     const color = {
@@ -130,8 +147,6 @@ const PokemonDetails = () => {
     return color;
   };
 
-  console.log(pokemonDetail);
-
   let imageUrl = '';
 
   if (pokemonDetail.id < 899) {
@@ -141,9 +156,15 @@ const PokemonDetails = () => {
   }
 
   return (
-    <div className="h-full w-full rounded-xl bg-white px-4">
+    <div className="h-full w-full rounded-t-xl bg-white px-4">
       <div className="relative h-[130px] w-full">
-        <div className="absolute -top-[90px] flex w-full justify-center">
+        <button
+          className="absolute right-0 top-0 z-10 mt-2 h-[45px] w-[45px] hover:cursor-pointer"
+          onClick={() => setShowDetails(false)}
+        >
+          <CloseSVG />
+        </button>
+        <div className="absolute -top-[50px] flex w-full justify-center">
           {Object.keys(pokemonDetail).length === 0 && (
             <img
               src={pokeBallPict}
@@ -152,16 +173,16 @@ const PokemonDetails = () => {
             />
           )}
           {Object.keys(pokemonDetail).length > 0 && (
-            <img src={imageUrl} alt="pokeball" className={`h-[200px] w-[200px]`} />
+            <img src={imageUrl} alt={pokemonDetail.name} className={`h-[180px] w-[180px]`} />
           )}
         </div>
       </div>
       <div className="w-full">
         {!isLoading && Object.keys(pokemonDetail).length === 0 && (
-          <p className="w-full text-center text-[30px] font-bold text-slate-400">Select Pokemon</p>
+          <p className="mt-14 w-full text-center text-[30px] font-bold text-slate-400">Select Pokemon</p>
         )}
         {isLoading && (
-          <p className="w-full animate-pulse text-center text-[30px] font-bold text-slate-400">Loading...</p>
+          <p className="mt-14 w-full animate-pulse text-center text-[30px] font-bold text-slate-400">Loading...</p>
         )}
 
         {Object.keys(pokemonDetail).length > 0 && (
@@ -193,29 +214,31 @@ const PokemonDetails = () => {
               )}
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3 px-2">
-              <div className="flex w-full flex-col items-center justify-center">
-                <p className="text-center font-semibold">Base Exp</p>
-                <div className="mt-2 flex w-full ">
-                  <p className="flex h-[34px] w-full items-center justify-center rounded-xl bg-gray-100 text-[14px] font-medium">
-                    {pokemonDetail.base_experience}
-                  </p>
+            <div className="flex w-full justify-center">
+              <div className="mt-6 grid w-[500px] grid-cols-3 gap-3 px-2">
+                <div className="flex w-full flex-col items-center justify-center">
+                  <p className="text-center font-semibold">Base Exp</p>
+                  <div className="mt-2 flex w-full ">
+                    <p className="flex h-[34px] w-full items-center justify-center rounded-xl bg-gray-100 text-[14px] font-medium">
+                      {pokemonDetail.base_experience}
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full flex-col items-center justify-center">
-                <p className="text-center font-semibold">Height</p>
-                <div className="mt-2 flex w-full ">
-                  <p className="flex h-[34px] w-full items-center justify-center rounded-xl bg-gray-100 text-[14px] font-medium">
-                    {(10 * pokemonDetail.height) / 100}m
-                  </p>
+                <div className="flex w-full flex-col items-center justify-center">
+                  <p className="text-center font-semibold">Height</p>
+                  <div className="mt-2 flex w-full ">
+                    <p className="flex h-[34px] w-full items-center justify-center rounded-xl bg-gray-100 text-[14px] font-medium">
+                      {(10 * pokemonDetail.height) / 100}m
+                    </p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex w-full flex-col items-center justify-center">
-                <p className="text-center font-semibold">Weight</p>
-                <div className="mt-2 flex w-full ">
-                  <p className="flex h-[34px] w-full items-center justify-center rounded-xl bg-gray-100 text-[14px] font-medium">
-                    {(10 * pokemonDetail.weight) / 100}kg
-                  </p>
+                <div className="flex w-full flex-col items-center justify-center">
+                  <p className="text-center font-semibold">Weight</p>
+                  <div className="mt-2 flex w-full ">
+                    <p className="flex h-[34px] w-full items-center justify-center rounded-xl bg-gray-100 text-[14px] font-medium">
+                      {(10 * pokemonDetail.weight) / 100}kg
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -286,7 +309,7 @@ const PokemonDetails = () => {
             </div>
 
             <div className="mt-7">
-              <p className="mb-3 w-full text-center font-semibold">Evolution</p>
+              <p className="w-full text-center font-semibold">Evolution</p>
               <div className="flex items-center justify-center gap-2">
                 {evolution !== undefined && (
                   <>
@@ -297,7 +320,9 @@ const PokemonDetails = () => {
                           .replace('/', '')}.png`}
                         alt={evolution.chain.species.name}
                       />
-                      <p className="text-center capitalize">{evolution.chain.species.name}</p>
+                      <p className="text-center font-semibold capitalize text-gray-500">
+                        {evolution.chain.species.name}
+                      </p>
                     </div>
                     {evolution.chain.evolves_to[0] !== undefined && (
                       <>
@@ -312,7 +337,9 @@ const PokemonDetails = () => {
                               .replace('/', '')}.png`}
                             alt={evolution.chain.evolves_to[0].species.name}
                           />
-                          <p className="text-center capitalize">{evolution.chain.evolves_to[0].species.name}</p>
+                          <p className="text-center font-semibold capitalize text-gray-500">
+                            {evolution.chain.evolves_to[0].species.name}
+                          </p>
                         </div>
                         {evolution.chain.evolves_to[0].evolves_to[0] !== undefined && (
                           <>
@@ -326,7 +353,7 @@ const PokemonDetails = () => {
                                   .replace('/', '')}.png`}
                                 alt={evolution.chain.evolves_to[0].evolves_to[0].species.name}
                               />
-                              <p className="text-center capitalize">
+                              <p className="text-center font-semibold capitalize text-gray-500">
                                 {evolution.chain.evolves_to[0].evolves_to[0].species.name}
                               </p>
                             </div>
@@ -341,6 +368,14 @@ const PokemonDetails = () => {
           </>
         )}
       </div>
+
+      {!isLoading && Object.keys(pokemonDetail).length > 0 && (
+        <div className="flex justify-center">
+          <button className="mt-4 rounded-full bg-red-300 p-2 hover:animate-spin">
+            <img src={pokeBallPict} alt="catch" className="h-[40px] w-[40px]" />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

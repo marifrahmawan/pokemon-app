@@ -58,7 +58,7 @@ const PokemonCardContainer = () => {
   };
 
   return (
-    <div className="grid min-h-[2000px] grow grid-cols-2 p-5 lg:p-0 lg:grid-cols-4 gap-4">
+    <div className="mx-9 grid min-h-[2000px] grow grid-cols-2 gap-4 p-5 lg:grid-cols-4 lg:p-0">
       {pokemon
         .sort((a, b) => a.id - b.id)
         .map((pokemon: IPokemon) => (

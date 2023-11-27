@@ -17,22 +17,22 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
       color.textColor = 'text-black';
     }
 
-    if (type == 'ice' || type == 'ghost' ) {
+    if (type == 'ice' || type == 'ghost') {
       color.bgColor = 'bg-gray-100';
       color.textColor = 'text-black';
     }
 
-    if (type == 'rock' ) {
+    if (type == 'rock') {
       color.bgColor = 'bg-[#767c6c]';
       color.textColor = 'text-black';
     }
 
-    if (type == 'dragon' ) {
+    if (type == 'dragon') {
       color.bgColor = 'bg-red-500';
       color.textColor = 'text-black';
     }
 
-    if (type == 'dark' ) {
+    if (type == 'dark') {
       color.bgColor = 'bg-black';
       color.textColor = 'text-white';
     }
@@ -108,10 +108,13 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
   }
   const loadPokemonDetail = usePokemonStore((state) => state.loadPokemonDetail);
   const setIsloading = usePokemonStore((state) => state.setIsLoading);
+  const setShowDetails = usePokemonStore((state) => state.setShowDetails);
+
 
   const detailHandler = () => {
     setIsloading();
     loadPokemonDetail({});
+    setShowDetails(true);
     setTimeout(() => {
       loadPokemonDetail(data);
       setIsloading();
@@ -120,7 +123,7 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
 
   return (
     <div
-      className="lg:my-10 my-4 h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer"
+      className="my-4 h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer lg:my-10"
       onClick={() => detailHandler()}
     >
       <div className="relative flex h-[50px] justify-center">
