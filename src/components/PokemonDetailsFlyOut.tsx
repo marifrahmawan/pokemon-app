@@ -390,7 +390,7 @@ const PokemonDetails = () => {
           </div>
 
           {!isLoading && Object.keys(pokemonDetail).length > 0 && (
-            <div className="flex justify-center">
+            <div className="flex justify-center mb-5">
               <button
                 className="mt-4 rounded-full bg-red-300 p-2 hover:animate-spin"
                 onClick={() => setIsCatching(true)}
