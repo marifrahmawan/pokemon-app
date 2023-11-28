@@ -18,10 +18,8 @@ const MyPokemonList = () => {
 
   const myPokemonList: [] = JSON.parse(localStorage.getItem('myPokemon') || '');
 
-  console.log(myPokemonList);
-
   return (
-    <div className="h-full w-full rounded-t-xl bg-gray-100 px-4 overflow-y-scroll">
+    <div className="h-full w-full overflow-y-scroll rounded-t-xl bg-gray-100 px-4">
       <div className="relative w-full">
         <button
           className="absolute right-0 top-0 z-10 mt-2 h-[45px] w-[45px] hover:cursor-pointer"
@@ -30,11 +28,17 @@ const MyPokemonList = () => {
           <CloseSVG />
         </button>
       </div>
-      <div className="flex w-full justify-center mt-9">
-        <p className='text-[24px] font-bold bg-indigo-200 px-4 rounded-full py-1'>My Pokemon</p>
+      <div className="mt-9 flex w-full justify-center">
+        <p className="rounded-full bg-indigo-200 px-4 py-1 text-[24px] font-bold">My Pokemon</p>
       </div>
 
-      <div className="grid lg:grid-cols-3 grid-cols-2 gap-2 pt-7">
+      {myPokemonList.length === 0 && (
+        <div className="flex h-full w-full items-center justify-center">
+          <p className="text-[22px] font-bold text-gray-400">Go Catch Some Pokemons</p>
+        </div>
+      )}
+
+      <div className="grid grid-cols-2 gap-2 pt-7 lg:grid-cols-3">
         {myPokemonList.map((myPokemon: any) => (
           <PokemonCard
             key={myPokemon.id}

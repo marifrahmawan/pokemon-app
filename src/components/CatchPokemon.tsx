@@ -15,6 +15,7 @@ const CatchPokemon = (props: IProps) => {
   const setShowDetails = usePokemonStore((state) => state.setShowDetails);
   const setIsCatching = usePokemonStore((state) => state.setIsCatching);
   const loadPokemonDetail = usePokemonStore((state) => state.loadPokemonDetail);
+  const setShowMyPokemon = usePokemonStore((state) => state.setShowMyPokemon);
 
   const [isCatchSuccess, setIsCatchSuccess] = useState<boolean>();
 
@@ -35,7 +36,6 @@ const CatchPokemon = (props: IProps) => {
   const catchPokemonHandler = () => {
     const percentageSuccess = Math.random() * 100;
     if (percentageSuccess > 50) {
-      console.log('Congratulations');
       setIsCatchSuccess(true);
       const myPokemon = JSON.parse(localStorage.getItem('myPokemon') || '');
 
@@ -43,6 +43,11 @@ const CatchPokemon = (props: IProps) => {
 
       const pokemonData = { id: myPokemon.length + 1, myPokemonName: pokemonName, pokemonData: data };
       localStorage.setItem('myPokemon', JSON.stringify([...myPokemon, pokemonData]));
+
+      setTimeout(() => {
+        setIsCatching(false);
+        setShowMyPokemon(true);
+      }, 2000);
     } else {
       setIsCatchSuccess(false);
     }
