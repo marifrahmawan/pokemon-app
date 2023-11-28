@@ -26,7 +26,10 @@ function App() {
 
   return (
     <div className="relative flex bg-gray-100">
-      <button className="fixed right-10 top-10 z-[3] h-[60px] w-[60px]" onClick={() => showMyPokemonList()}>
+      <button
+        className="fixed right-2 top-5 z-[3] h-[40px] w-[40px] lg:right-10 lg:top-10 lg:h-[60px] lg:w-[60px]"
+        onClick={() => showMyPokemonList()}
+      >
         <img
           src={pokeBallPict}
           alt="My Pokemon"
@@ -36,7 +39,7 @@ function App() {
 
       <div className="container">
         <div className="my-7 flex w-full justify-center">
-          <img src={PokemonLogo} alt="Pokemon Logo" className="h-[150px]" />
+          <img src={PokemonLogo} alt="Pokemon Logo" className="h-[80px] md:h-[120px] lg:h-[150px]" />
         </div>
         <PokemonCardContainer />
       </div>
@@ -53,7 +56,7 @@ function App() {
             showDetails ? '' : 'translate-y-full'
           } fixed right-0 top-0 z-10 flex  h-full w-full justify-center transition-all duration-700 ease-in-out`}
         >
-          <div className="flex h-full w-[800px] justify-center pt-14">
+          <div className="flex h-full w-full lg:w-[800px] justify-center lg:pt-14">
             <PokemonDetailsFlyOut />
           </div>
         </div>

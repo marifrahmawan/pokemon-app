@@ -34,7 +34,7 @@ const MyPokemonList = () => {
         <p className='text-[24px] font-bold bg-indigo-200 px-4 rounded-full py-1'>My Pokemon</p>
       </div>
 
-      <div className="grid grid-cols-3 gap-2 pt-7">
+      <div className="grid lg:grid-cols-3 grid-cols-2 gap-2 pt-7">
         {myPokemonList.map((myPokemon: any) => (
           <PokemonCard
             key={myPokemon.id}

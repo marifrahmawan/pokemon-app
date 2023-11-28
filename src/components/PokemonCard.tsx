@@ -133,7 +133,7 @@ const PokemonCard = (props: IProps) => {
 
   return (
     <div
-      className="my-4 min-h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer lg:my-10"
+      className="my-4 min-h-[170px] min-w-fit w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer lg:my-10"
       onClick={() => detailHandler()}
     >
       <div className="relative flex h-[50px] justify-center">

@@ -175,15 +175,15 @@ const PokemonDetails = () => {
   return (
     <>
       {!isCatching && !showMyPokemon && (
-        <div className="h-full w-full rounded-t-xl bg-white px-4">
-          <div className="relative h-[130px] w-full">
+        <div className="h-full w-full rounded-t-xl bg-white px-4 overflow-y-scroll lg:overflow-visible">
+          <div className="relative lg:h-[130px] w-full">
             <button
               className="absolute right-0 top-0 z-10 mt-2 h-[45px] w-[45px] hover:cursor-pointer"
               onClick={() => closeHandler()}
             >
               <CloseSVG />
             </button>
-            <div className="absolute -top-[50px] flex w-full justify-center">
+            <div className="lg:absolute lg:-top-[50px] flex w-full justify-center">
               {Object.keys(pokemonDetail).length === 0 && (
                 <img
                   src={pokeBallPict}
@@ -329,7 +329,7 @@ const PokemonDetails = () => {
 
                 <div className="mt-7">
                   <p className="w-full text-center font-semibold">Evolution</p>
-                  <div className="flex items-center justify-center gap-2">
+                  <div className="flex items-center justify-center lg:gap-2">
                     {evolution !== undefined && (
                       <>
                         <div>
@@ -345,7 +345,7 @@ const PokemonDetails = () => {
                         </div>
                         {evolution.chain.evolves_to[0] !== undefined && (
                           <>
-                            <p className="rounded-xl bg-gray-100 px-2 py-1 text-[14px] font-bold text-gray-500">
+                            <p className="rounded-xl bg-gray-100 px-2 py-1 lg:text-[14px] text-[12px] font-bold text-gray-500">
                               Lvl. {evolution.chain.evolves_to[0].evolution_details[0].min_level ?? '?'}
                             </p>
                             {/* <p>{evolution.chain.evolves_to[0].species.name}</p> */}
@@ -362,7 +362,7 @@ const PokemonDetails = () => {
                             </div>
                             {evolution.chain.evolves_to[0].evolves_to[0] !== undefined && (
                               <>
-                                <p className="rounded-xl bg-gray-100 px-2 py-1 text-[14px] font-bold text-gray-500">
+                                <p className="rounded-xl bg-gray-100 px-2 py-1 lg:text-[14px] text-[12px] font-bold text-gray-500">
                                   Lvl.{' '}
                                   {evolution.chain.evolves_to[0].evolves_to[0].evolution_details[0].min_level ?? '?'}
                                 </p>
