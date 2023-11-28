@@ -1,6 +1,15 @@
 import usePokemonStore from '../store/pokemon-store';
 
-const PokemonCard = ({ id, name, types, data }: { id: number; name: string; types: []; data: unknown }) => {
+interface IProps {
+  id: number;
+  name: string;
+  types: [];
+  data: unknown;
+  myPokemonName: string | undefined;
+}
+
+const PokemonCard = (props: IProps) => {
+  const { id, name, types, data, myPokemonName } = props;
   const buttonColor = (type: string) => {
     const color = {
       bgColor: 'bg-gray-100',
@@ -109,12 +118,13 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
   const loadPokemonDetail = usePokemonStore((state) => state.loadPokemonDetail);
   const setIsloading = usePokemonStore((state) => state.setIsLoading);
   const setShowDetails = usePokemonStore((state) => state.setShowDetails);
-
+  const setShowMyPokemon = usePokemonStore((state) => state.setShowMyPokemon);
 
   const detailHandler = () => {
     setIsloading();
     loadPokemonDetail({});
     setShowDetails(true);
+    setShowMyPokemon(false);
     setTimeout(() => {
       loadPokemonDetail(data);
       setIsloading();
@@ -123,7 +133,7 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
 
   return (
     <div
-      className="my-4 h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer lg:my-10"
+      className="my-4 min-h-[170px] w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer lg:my-10"
       onClick={() => detailHandler()}
     >
       <div className="relative flex h-[50px] justify-center">
@@ -133,6 +143,7 @@ const PokemonCard = ({ id, name, types, data }: { id: number; name: string; type
       </div>
       <div className="flex flex-col items-center justify-center">
         <h3 className="mb-1 font-bold text-gray-500">N&deg; {id}</h3>
+        <h2 className="leading-3 font-extrabold capitalize text-blue-400">{myPokemonName}</h2>
         <h2 className="mb-2 font-extrabold capitalize text-black">{name}</h2>
         <div className="flex gap-1">
           {types.map((type: { type: { name: string } }) => (

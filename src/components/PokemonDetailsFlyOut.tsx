@@ -4,6 +4,7 @@ import pokeBallPict from '../assets/pokeball.png';
 import { useEffect, useState } from 'react';
 import CloseSVG from '../assets/CloseSVG';
 import CatchPokemon from './CatchPokemon';
+import MyPokemonList from './MyPokemonList';
 
 const PokemonDetails = () => {
   const [species, setSpecies] = useState<any>();
@@ -11,10 +12,12 @@ const PokemonDetails = () => {
 
   const pokemonDetail = usePokemonStore((state) => state.pokemonDetail);
   const isLoading = usePokemonStore((state) => state.isLoading);
-  const setShowDetails = usePokemonStore((state) => state.setShowDetails);
   const loadPokemonDetail = usePokemonStore((state) => state.loadPokemonDetail);
   const isCatching = usePokemonStore((state) => state.isCatching);
+  const showMyPokemon = usePokemonStore((state) => state.showMyPokemon);
+  const setShowDetails = usePokemonStore((state) => state.setShowDetails);
   const setIsCatching = usePokemonStore((state) => state.setIsCatching);
+  const setShowMyPokemon = usePokemonStore((state) => state.setShowMyPokemon);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +46,7 @@ const PokemonDetails = () => {
 
         setShowDetails(false);
         setIsCatching(false);
+        setShowMyPokemon(false);
         loadPokemonDetail({});
       }
     };
@@ -52,11 +56,12 @@ const PokemonDetails = () => {
     return () => {
       document.removeEventListener('keydown', keyDownHandler);
     };
-  }, [setShowDetails, setIsCatching, loadPokemonDetail]);
+  }, [setShowDetails, setIsCatching, loadPokemonDetail, setShowMyPokemon]);
 
   const closeHandler = () => {
     setShowDetails(false);
     setIsCatching(false);
+    setShowMyPokemon(false);
     loadPokemonDetail({});
   };
 
@@ -169,7 +174,7 @@ const PokemonDetails = () => {
 
   return (
     <>
-      {!isCatching && (
+      {!isCatching && !showMyPokemon && (
         <div className="h-full w-full rounded-t-xl bg-white px-4">
           <div className="relative h-[130px] w-full">
             <button
@@ -398,6 +403,8 @@ const PokemonDetails = () => {
       )}
 
       {isCatching && <CatchPokemon data={pokemonDetail} />}
+
+      {!isCatching && showMyPokemon && <MyPokemonList />}
     </>
   );
 };

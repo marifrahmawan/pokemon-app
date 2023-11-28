@@ -62,7 +62,7 @@ const PokemonCardContainer = () => {
       {pokemon
         .sort((a, b) => a.id - b.id)
         .map((pokemon: IPokemon) => (
-          <PokemonCard key={pokemon.id} id={pokemon.id} name={pokemon.name} types={pokemon.types} data={pokemon} />
+          <PokemonCard key={pokemon.id} id={pokemon.id} name={pokemon.name} types={pokemon.types} data={pokemon} myPokemonName={undefined} />
         ))}
     </div>
   );
