@@ -13,6 +13,9 @@ interface IPokemonState {
   pokemonDetail: any;
   isLoading: boolean;
   showDetails: boolean;
+  isCatching: boolean;
+
+  setIsCatching: (input: boolean) => void;
   loadPokemon: (pokemonData: IPokemon) => void;
   loadPokemonDetail: (pokemonData: any) => void;
   setIsLoading: () => void;
@@ -24,10 +27,12 @@ const usePokemonStore = create<IPokemonState>()((set) => ({
   pokemonDetail: {},
   isLoading: false,
   showDetails: false,
+  isCatching: false,
   loadPokemon: (pokemonData) => set((state) => ({ pokemon: [...state.pokemon, pokemonData] })),
   loadPokemonDetail: (pokemonData) => set(() => ({ pokemonDetail: pokemonData })),
   setIsLoading: () => set((state) => ({ isLoading: !state.isLoading })),
   setShowDetails: (input: boolean) => set(() => ({ showDetails: input })),
+  setIsCatching: (input: boolean) => set(() => ({ isCatching: input })),
 }));
 
 export default usePokemonStore;

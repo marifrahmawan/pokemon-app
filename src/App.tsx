@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import PokemonLogo from './assets/International_Pokémon_logo.svg.png';
 
 import PokemonCardContainer from './components/PokemonCardContainer';
@@ -7,10 +8,17 @@ import usePokemonStore from './store/pokemon-store';
 function App() {
   const showDetails = usePokemonStore((state) => state.showDetails);
 
+  useEffect(() => {
+    const myPokemon = localStorage.getItem('myPokemon');
+    if (!myPokemon) {
+      localStorage.setItem('myPokemon', '[]');
+    }
+  }, []);
+
   return (
-    <div className='flex bg-gray-100'>
+    <div className="flex bg-gray-100">
       <div className="container">
-        <div className="flex my-7 w-full justify-center">
+        <div className="my-7 flex w-full justify-center">
           <img src={PokemonLogo} alt="Pokemon Logo" className="h-[150px]" />
         </div>
         <PokemonCardContainer />

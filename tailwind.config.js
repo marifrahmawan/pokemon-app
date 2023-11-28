@@ -9,6 +9,9 @@ export default {
       },
     },
     extend: {
+      backgroundImage: {
+        'pokemon-habitat': "url('/src/assets/d9spuwer2c491.webp')",
+      },
       colors: {
         'hot-cinnamon': {
           50: '#fdf8ef',
