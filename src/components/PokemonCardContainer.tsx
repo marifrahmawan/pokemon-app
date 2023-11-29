@@ -69,6 +69,7 @@ const PokemonCardContainer = () => {
             types={pokemon.types}
             data={pokemon}
             myPokemonName={undefined}
+            myPokemonId={undefined}
             onDelete={false}
           />
         ))}
