@@ -58,11 +58,19 @@ const PokemonCardContainer = () => {
   };
 
   return (
-    <div className="lg:mx-9 mx-3 grid min-h-[2000px] grow grid-cols-2 gap-4 p-5 lg:grid-cols-4 lg:p-0">
+    <div className="mx-3 grid min-h-[2000px] grow grid-cols-2 justify-items-center gap-4 p-5 lg:mx-9 lg:grid-cols-4 lg:p-0">
       {pokemon
         .sort((a, b) => a.id - b.id)
         .map((pokemon: IPokemon) => (
-          <PokemonCard key={pokemon.id} id={pokemon.id} name={pokemon.name} types={pokemon.types} data={pokemon} myPokemonName={undefined} />
+          <PokemonCard
+            key={pokemon.id}
+            id={pokemon.id}
+            name={pokemon.name}
+            types={pokemon.types}
+            data={pokemon}
+            myPokemonName={undefined}
+            onDelete={false}
+          />
         ))}
     </div>
   );

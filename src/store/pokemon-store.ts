@@ -15,6 +15,7 @@ interface IPokemonState {
   showDetails: boolean;
   isCatching: boolean;
   showMyPokemon: boolean;
+  myPokemon: [];
 
   setIsCatching: (input: boolean) => void;
   loadPokemon: (pokemonData: IPokemon) => void;
@@ -22,6 +23,7 @@ interface IPokemonState {
   setIsLoading: () => void;
   setShowDetails: (input: boolean) => void;
   setShowMyPokemon: (input: boolean) => void;
+  setMyPokemon: (input: any) => void;
 }
 
 const usePokemonStore = create<IPokemonState>()((set) => ({
@@ -31,6 +33,7 @@ const usePokemonStore = create<IPokemonState>()((set) => ({
   showDetails: false,
   isCatching: false,
   showMyPokemon: false,
+  myPokemon: JSON.parse(localStorage.getItem('myPokemon') || ''),
 
   loadPokemon: (pokemonData) => set((state) => ({ pokemon: [...state.pokemon, pokemonData] })),
   loadPokemonDetail: (pokemonData) => set(() => ({ pokemonDetail: pokemonData })),
@@ -38,6 +41,7 @@ const usePokemonStore = create<IPokemonState>()((set) => ({
   setShowDetails: (input: boolean) => set(() => ({ showDetails: input })),
   setIsCatching: (input: boolean) => set(() => ({ isCatching: input })),
   setShowMyPokemon: (input: boolean) => set(() => ({ showMyPokemon: input })),
+  setMyPokemon: (input: any) => set(() => ({ myPokemon: input })),
 }));
 
 export default usePokemonStore;

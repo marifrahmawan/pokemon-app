@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import Trash from '../assets/Trash';
 import usePokemonStore from '../store/pokemon-store';
 
 interface IProps {
@@ -5,11 +7,13 @@ interface IProps {
   name: string;
   types: [];
   data: unknown;
+  onDelete: boolean;
   myPokemonName: string | undefined;
+  myPokemonId: number | undefined;
 }
 
 const PokemonCard = (props: IProps) => {
-  const { id, name, types, data, myPokemonName } = props;
+  const { id, name, types, data, myPokemonName, onDelete, myPokemonId } = props;
   const buttonColor = (type: string) => {
     const color = {
       bgColor: 'bg-gray-100',
@@ -119,6 +123,8 @@ const PokemonCard = (props: IProps) => {
   const setIsloading = usePokemonStore((state) => state.setIsLoading);
   const setShowDetails = usePokemonStore((state) => state.setShowDetails);
   const setShowMyPokemon = usePokemonStore((state) => state.setShowMyPokemon);
+  const myPokemon = usePokemonStore((state) => state.myPokemon);
+  const setMyPokemon = usePokemonStore((state) => state.setMyPokemon);
 
   const detailHandler = () => {
     setIsloading();
@@ -131,35 +137,56 @@ const PokemonCard = (props: IProps) => {
     }, 500);
   };
 
+  const deleteHandler = () => {
+    const newMyPokemon = myPokemon.filter((pokemon: any) => {
+      return pokemon.id !== myPokemonId;
+    });
+
+    localStorage.setItem('myPokemon', JSON.stringify(newMyPokemon));
+
+    setMyPokemon(newMyPokemon);
+  };
+
   return (
-    <div
-      className="my-4 min-h-[170px] min-w-fit w-full rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer lg:my-10"
-      onClick={() => detailHandler()}
-    >
-      <div className="relative flex h-[50px] justify-center">
-        <span className="absolute top-[-50px] h-[100px] w-[100px]">
-          <img src={imageUrl} alt={name} className="h-full w-full" />
-        </span>
-      </div>
-      <div className="flex flex-col items-center justify-center">
-        <h3 className="mb-1 font-bold text-gray-500">N&deg; {id}</h3>
-        <h2 className="leading-3 font-extrabold capitalize text-blue-400">{myPokemonName}</h2>
-        <h2 className="mb-2 font-extrabold capitalize text-black">{name}</h2>
-        <div className="flex gap-1">
-          {types.map((type: { type: { name: string } }) => (
-            <div className="flex gap-2" key={type.type.name}>
-              <button
-                key={type.type.name}
-                className={`min-w-min rounded-lg px-3 py-1 text-[12px] font-semibold 
+    <div className="my-4 flex w-full flex-col items-center lg:my-6">
+      <div
+        className="relative  min-h-[170px] w-full min-w-fit rounded-3xl bg-white p-3 shadow-2xl hover:cursor-pointer "
+        onClick={() => detailHandler()}
+      >
+        <div className="relative flex h-[50px] justify-center">
+          <span className="absolute top-[-50px] h-[100px] w-[100px]">
+            <img src={imageUrl} alt={name} className="h-full w-full" />
+          </span>
+        </div>
+        <div className="flex flex-col items-center justify-center">
+          <h3 className="mb-1 font-bold text-gray-500">N&deg; {id}</h3>
+          <h2 className="max-w-[120px] break-words text-center font-extrabold capitalize leading-5 text-blue-400">
+            {myPokemonName}
+          </h2>
+          <h2 className="mb-2 font-extrabold capitalize text-black">{name}</h2>
+          <div className="flex gap-1">
+            {types.map((type: { type: { name: string } }) => (
+              <div className="flex gap-2" key={type.type.name}>
+                <button
+                  key={type.type.name}
+                  className={`min-w-min rounded-lg px-3 py-1 text-[12px] font-semibold 
               ${buttonColor(type.type.name).bgColor} 
               ${buttonColor(type.type.name).textColor}`}
-              >
-                {type.type.name}
-              </button>
-            </div>
-          ))}
+                >
+                  {type.type.name}
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+      {onDelete && (
+        <div className="mt-2">
+          <div className="h-[25px] w-[25px]" onClick={() => deleteHandler()}>
+            <Trash />
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -16,6 +16,7 @@ const CatchPokemon = (props: IProps) => {
   const setIsCatching = usePokemonStore((state) => state.setIsCatching);
   const loadPokemonDetail = usePokemonStore((state) => state.loadPokemonDetail);
   const setShowMyPokemon = usePokemonStore((state) => state.setShowMyPokemon);
+  const setMyPokemon = usePokemonStore((state) => state.setMyPokemon);
 
   const [isCatchSuccess, setIsCatchSuccess] = useState<boolean>();
 
@@ -44,6 +45,8 @@ const CatchPokemon = (props: IProps) => {
       const pokemonData = { id: myPokemon.length + 1, myPokemonName: pokemonName, pokemonData: data };
       localStorage.setItem('myPokemon', JSON.stringify([...myPokemon, pokemonData]));
 
+      setMyPokemon([...myPokemon, pokemonData]);
+
       setTimeout(() => {
         setIsCatching(false);
         setShowMyPokemon(true);
@@ -65,11 +68,11 @@ const CatchPokemon = (props: IProps) => {
       </div>
 
       {isCatchSuccess === false && (
-        <p className="font-press absolute bottom-[220px] left-11 animate-bounce">Try Again !!</p>
+        <p className="absolute bottom-[220px] left-11 animate-bounce font-press">Try Again !!</p>
       )}
 
       {isCatchSuccess === true && (
-        <p className="font-press absolute bottom-[220px] left-11 animate-bounce">Yeayyyy !!!</p>
+        <p className="absolute bottom-[220px] left-11 animate-bounce font-press">Yeayyyy !!!</p>
       )}
 
       <div className={`relative flex w-full justify-center ${isCatchSuccess ? 'hidden' : ''}`}>
