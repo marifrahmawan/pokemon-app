@@ -182,7 +182,7 @@ const PokemonCard = (props: IProps) => {
       </div>
       {onDelete && (
         <div className="mt-2">
-          <div className="h-[25px] w-[25px]" onClick={() => deleteHandler()}>
+          <div className="h-[25px] w-[25px] hover:cursor-pointer" onClick={() => deleteHandler()}>
             <Trash />
           </div>
         </div>
